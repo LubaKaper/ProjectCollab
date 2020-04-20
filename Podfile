@@ -6,7 +6,7 @@ target 'ProjectCollaboration' do
   use_frameworks!
 
   # Pods for ProjectCollaboration
-pod 'Firebase/Analytics'
+#pod 'Firebase/Analytics'
 pod 'Firebase/Firestore'
 
 pod 'FirebaseFirestoreSwift'
