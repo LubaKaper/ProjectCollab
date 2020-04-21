@@ -9,22 +9,50 @@
 import UIKit
 
 class FeedViewController: UIViewController {
+    
+    private var feedView = FeedView()
+    
+    override func loadView() {
+        view = feedView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
+        configureCV()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func configureCV() {
+        feedView.feedCV.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
+        feedView.feedCV.dataSource = self
+        feedView.feedCV.delegate = self
     }
-    */
 
+}
+
+extension FeedViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath)
+        cell.backgroundColor = .systemGray
+        return cell
+    }
+}
+
+extension FeedViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxSize: CGSize = feedView.safeAreaLayoutGuide.layoutFrame.size
+        let itemWidth = maxSize.width
+        let itemHeight = maxSize.height * 0.70
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout
+         collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+         return 20
+     }
 }
