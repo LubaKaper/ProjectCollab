@@ -9,13 +9,149 @@
 import UIKit
 
 class CreatePostView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 13
+        descriptionTextView.clipsToBounds = true
+        descriptionTextView.layer.cornerRadius = 13
     }
-    */
-
+    
+    public lazy var imageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "photo.fill")
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    
+    public lazy var titleTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .systemBackground
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textField.placeholder = "Title goes here"
+        return textField
+    }()
+    
+    public lazy var dateTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .systemBackground
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textField.placeholder = "5/2/20 - 5/6/20"
+        return textField
+    }()
+    
+    public lazy var categoryTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .systemBackground
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textField.placeholder = "Movile Development"
+        return textField
+    }()
+    
+    public lazy var locationTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .systemBackground
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textField.placeholder = "New York, New York"
+        return textField
+    }()
+    
+    public lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .systemBackground
+        textView.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textView.text = "This is where the description of the project will go. More information is needed in order for the user to post"
+        return textView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: UIScreen.main.bounds)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder:coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        configureImageViewConstraints()
+        configureTitleTextField()
+        configureDateTextField()
+        configureCategoryTextField()
+        configureLocationTextField()
+        configureDescriptionTextView()
+    }
+    
+    private func configureImageViewConstraints() {
+        addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4)
+            
+        ])
+    }
+    
+    private func configureTitleTextField() {
+        addSubview(titleTextField)
+        titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            titleTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            titleTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func configureDateTextField() {
+        addSubview(dateTextField)
+        dateTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            dateTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
+            dateTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            dateTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func configureCategoryTextField() {
+        addSubview(categoryTextField)
+        categoryTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            categoryTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 8),
+            categoryTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            categoryTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func configureLocationTextField() {
+        addSubview(locationTextField)
+        locationTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            locationTextField.topAnchor.constraint(equalTo: categoryTextField.bottomAnchor, constant: 8),
+            locationTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            locationTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func configureDescriptionTextView() {
+        addSubview(descriptionTextView)
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionTextView.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 8),
+            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            descriptionTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        ])
+    }
+    
 }
+
+
+
