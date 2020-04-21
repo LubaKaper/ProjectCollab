@@ -10,12 +10,146 @@ import UIKit
 
 class DetailView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+       override func layoutSubviews() {
+        super.layoutSubviews()
+        postImageView.clipsToBounds =  true
+        postImageView.layer.cornerRadius = 13
+        collaborateButton.clipsToBounds = true
+        collaborateButton.layer.cornerRadius = 13
+        donateButton.clipsToBounds = true
+        donateButton.layer.cornerRadius = 13
+        descriptionTextView.clipsToBounds = true
+        descriptionTextView.layer.cornerRadius = 13
+        projectNameLabel.clipsToBounds = true
+        projectNameLabel.layer.cornerRadius = 13
     }
-    */
+    
+    public lazy var postImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "photo.fill")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    public lazy var projectNameLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemBlue
+        label.text = "Category \nProject name \nLocation \nStart Date \n "
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        //label.font = UIFont(name: "Didot", size: 23.0)
+        return label
+    }()
+    
+    public lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = " Here we will have the full description of the project that is being offere a collaboration on, with all the details "
+       // textView.font = UIFont(name: "Didot", size: 20.0)
+        textView.isSelectable = false
+        textView.backgroundColor = .white
+      return textView
+    }()
+    
+    public lazy var postedByLabel: UILabel = {
+        let label = UILabel()
+        label.text = "postedBy@ "
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        //label.font = UIFont(name: "Didot", size: 23.0)
+        return label
+    }()
+    
+    private lazy var collaborateButton: UIButton = {
+            let button = UIButton()
+        button.titleLabel?.text = "Collaborate"
+            //button.setImage(UIImage(named: "collaborate"), for: .normal)
+            button.tag = 0
+        button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
+            return button
+        }()
+    
+    private lazy var donateButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.text = "Donate"
+        //button.setImage(UIImage(named: "donate"), for: .normal)
+        button.tag = 1
+        button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
+        return button
+    }()
+    public lazy var allButtons: [UIButton] = {
+        let buttons = [collaborateButton, donateButton]
+        return buttons
+    }()
+    
+    private var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 5
+        stackView.axis = .horizontal
+        stackView.backgroundColor = .yellow
+        return stackView
+    }()
+    
+    override init(frame: CGRect) {
+      super.init(frame: UIScreen.main.bounds)
+      commonInit()
+    }
+    
+    
+    
+    required init?(coder: NSCoder) {
+      super.init(coder: coder)
+      commonInit()
+    }
+    
+    private func commonInit() {
+        setupImageViewConstraints()
+        setupProjectInfoLabelConstraints()
+        setupDescriptionTextViewConstraint()
+        setupStackViewConstraints()
+    }
 
+    private func setupImageViewConstraints() {
+        addSubview(postImageView)
+        postImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            postImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 8),
+            postImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            postImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            postImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.35)
+        ])
+    }
+    private func setupProjectInfoLabelConstraints() {
+        addSubview(projectNameLabel)
+        projectNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            projectNameLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 5),
+            projectNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            projectNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+        ])
+    }
+    
+    private func setupDescriptionTextViewConstraint() {
+        addSubview(descriptionTextView)
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionTextView.topAnchor.constraint(equalTo: projectNameLabel.bottomAnchor, constant: 20),
+            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            descriptionTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.20)
+        ])
+    }
+    
+    private func setupStackViewConstraints() {
+        addSubview(stackView)
+        stackView.addArrangedSubview(collaborateButton)
+        stackView.addArrangedSubview(donateButton)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
+            stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05)
+        ])
+    }
 }
