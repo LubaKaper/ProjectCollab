@@ -15,6 +15,19 @@ class DetailViewController: UIViewController {
     override func loadView() {
         view = detailView
     }
+    
+    private var selectedPost: Post
+    
+    init( _ selectedPost: Post){
+       
+        self.selectedPost = selectedPost
+        super.init(nibName: nil, bundle: nil)
+
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("error")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
