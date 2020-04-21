@@ -10,6 +10,7 @@ import Foundation
 import FirebaseStorage
 
 class StorageService {
+
   private init() {}
   static let shared = StorageService()
   
@@ -24,4 +25,6 @@ class StorageService {
       }
     }
   }
+    
+    
 }
