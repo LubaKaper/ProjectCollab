@@ -65,9 +65,12 @@ extension FeedViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as? FeedCell else {
+            fatalError()
+        }
         cell.backgroundColor = .systemGray
         let aPost = posts[indexPath.row]
+        cell.updateCell(post: aPost)
         return cell
     }
 }

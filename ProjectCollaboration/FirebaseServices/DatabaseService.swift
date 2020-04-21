@@ -28,4 +28,8 @@ class DatabaseServices {
             }
         }
     }
+    
+    public func createPost() {
+        
+    }
 }
