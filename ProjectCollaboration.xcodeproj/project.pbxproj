@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		17858847548B8B96C5BAF4A2 /* Pods_ProjectCollaboration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C82A7E4D3D7F5F944B38D5 /* Pods_ProjectCollaboration.framework */; };
-		520F6D48244F520E0061D3DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 520F6D47244F520E0061D3DC /* GoogleService-Info.plist */; };
+		52EA0DAB2450BD5300FDC12C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EA0DAA2450BD5300FDC12C /* InitialViewController.swift */; };
+		52EA0DAD2450BD8100FDC12C /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EA0DAC2450BD8100FDC12C /* InitialView.swift */; };
+		52EA0DAF2450BE8C00FDC12C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52EA0DAE2450BE8C00FDC12C /* GoogleService-Info.plist */; };
 		8D62DE31244F3C3D003BE4AC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE30244F3C3D003BE4AC /* TabBarController.swift */; };
 		8D62DE34244F3CE6003BE4AC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE33244F3CE6003BE4AC /* FeedViewController.swift */; };
 		8D62DE36244F3CF6003BE4AC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE35244F3CF6003BE4AC /* DetailViewController.swift */; };
@@ -26,7 +28,6 @@
 		8D62DE53244F3EA7003BE4AC /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE52244F3EA7003BE4AC /* UserModel.swift */; };
 		8D62DE55244F3EB4003BE4AC /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE54244F3EB4003BE4AC /* CommentModel.swift */; };
 		8D62DE58244F3EDA003BE4AC /* ShowAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D62DE57244F3EDA003BE4AC /* ShowAlert.swift */; };
-		8D62DE5C244F5257003BE4AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D62DE5B244F5257003BE4AC /* GoogleService-Info.plist */; };
 		8DBAD640244E02B900889084 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBAD63F244E02B900889084 /* AppDelegate.swift */; };
 		8DBAD642244E02B900889084 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBAD641244E02B900889084 /* SceneDelegate.swift */; };
 		8DBAD64A244E02B900889084 /* ProjectCollaboration.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DBAD648244E02B900889084 /* ProjectCollaboration.xcdatamodeld */; };
@@ -37,7 +38,9 @@
 /* Begin PBXFileReference section */
 		42C82A7E4D3D7F5F944B38D5 /* Pods_ProjectCollaboration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectCollaboration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9D345B2A00C6E10835ED18 /* Pods-ProjectCollaboration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCollaboration.debug.xcconfig"; path = "Target Support Files/Pods-ProjectCollaboration/Pods-ProjectCollaboration.debug.xcconfig"; sourceTree = "<group>"; };
-		520F6D47244F520E0061D3DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		52EA0DAA2450BD5300FDC12C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		52EA0DAC2450BD8100FDC12C /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
+		52EA0DAE2450BE8C00FDC12C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C41FD63A871C6FE184EBB67 /* Pods-ProjectCollaboration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCollaboration.release.xcconfig"; path = "Target Support Files/Pods-ProjectCollaboration/Pods-ProjectCollaboration.release.xcconfig"; sourceTree = "<group>"; };
 		8D62DE30244F3C3D003BE4AC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8D62DE33244F3CE6003BE4AC /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +59,6 @@
 		8D62DE52244F3EA7003BE4AC /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8D62DE54244F3EB4003BE4AC /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		8D62DE57244F3EDA003BE4AC /* ShowAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAlert.swift; sourceTree = "<group>"; };
-		8D62DE5B244F5257003BE4AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8DBAD63C244E02B900889084 /* ProjectCollaboration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectCollaboration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DBAD63F244E02B900889084 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DBAD641244E02B900889084 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				8D62DE35244F3CF6003BE4AC /* DetailViewController.swift */,
 				8D62DE37244F3D09003BE4AC /* CreatePostViewController.swift */,
 				8D62DE39244F3D22003BE4AC /* ProfileViewController.swift */,
+				52EA0DAA2450BD5300FDC12C /* InitialViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -121,6 +124,7 @@
 				8D62DE3F244F3DB5003BE4AC /* DetailView.swift */,
 				8D62DE41244F3DC5003BE4AC /* CreatePostView.swift */,
 				8D62DE43244F3DD6003BE4AC /* ProfileView.swift */,
+				52EA0DAC2450BD8100FDC12C /* InitialView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,7 +197,7 @@
 				8DBAD641244E02B900889084 /* SceneDelegate.swift */,
 				8DBAD64B244E02BD00889084 /* Assets.xcassets */,
 				8DBAD64D244E02BD00889084 /* LaunchScreen.storyboard */,
-				8D62DE5B244F5257003BE4AC /* GoogleService-Info.plist */,
+				52EA0DAE2450BE8C00FDC12C /* GoogleService-Info.plist */,
 				8DBAD650244E02BD00889084 /* Info.plist */,
 				8DBAD648244E02B900889084 /* ProjectCollaboration.xcdatamodeld */,
 			);
@@ -262,7 +266,7 @@
 			files = (
 				8DBAD64F244E02BD00889084 /* LaunchScreen.storyboard in Resources */,
 				8DBAD64C244E02BD00889084 /* Assets.xcassets in Resources */,
-				8D62DE5C244F5257003BE4AC /* GoogleService-Info.plist in Resources */,
+				52EA0DAF2450BE8C00FDC12C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,10 +330,12 @@
 				8D62DE40244F3DB5003BE4AC /* DetailView.swift in Sources */,
 				8D62DE47244F3E03003BE4AC /* FeedCell.swift in Sources */,
 				8D62DE31244F3C3D003BE4AC /* TabBarController.swift in Sources */,
+				52EA0DAD2450BD8100FDC12C /* InitialView.swift in Sources */,
 				8D62DE49244F3E2F003BE4AC /* ProfileCell.swift in Sources */,
 				8D62DE34244F3CE6003BE4AC /* FeedViewController.swift in Sources */,
 				8D62DE4F244F3E85003BE4AC /* StorageService.swift in Sources */,
 				8D62DE42244F3DC5003BE4AC /* CreatePostView.swift in Sources */,
+				52EA0DAB2450BD5300FDC12C /* InitialViewController.swift in Sources */,
 				8D62DE53244F3EA7003BE4AC /* UserModel.swift in Sources */,
 				8D62DE3A244F3D22003BE4AC /* ProfileViewController.swift in Sources */,
 				8D62DE55244F3EB4003BE4AC /* CommentModel.swift in Sources */,
