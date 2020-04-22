@@ -13,6 +13,18 @@ class ProfileViewController: UIViewController {
     private var originalYConstraint: CGFloat?
     private var keyboardIsVisible = false
     
+    private lazy var imagePickerController: UIImagePickerController = {
+      let ip = UIImagePickerController()
+      ip.delegate = self
+      return ip
+    }()
+    
+    private var selectedImage: UIImage? {
+      didSet {
+        profileView.profilePictureImageView.image = selectedImage
+      }
+    }
+    
     public lazy var tapGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(didTap(_:)))
@@ -39,9 +51,24 @@ class ProfileViewController: UIViewController {
         print("tap")
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { alertAction in
+            self.imagePickerController.sourceType = .photoLibrary
+            self.present(self.imagePickerController, animated: true)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { alertAction in
+          self.imagePickerController.sourceType = .camera
+          self.present(self.imagePickerController, animated: true)
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+          alertController.addAction(cameraAction)
+        }
+        
         alertController.addAction(cancelAction)
+        alertController.addAction(photoLibraryAction)
         present(alertController, animated: true)
     }
     
@@ -101,9 +128,20 @@ extension ProfileViewController: UITextFieldDelegate    {
         textField.resignFirstResponder()
         return true
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        keyboardIsVisible = true
+        return true
+    }
 }
 
 extension ProfileViewController: UITextViewDelegate {
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        keyboardIsVisible = false
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray  {
             textView.text = nil
@@ -127,4 +165,15 @@ extension ProfileViewController: UITextViewDelegate {
         }
         return true
     }
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+      return
+    }
+    selectedImage = image
+    dismiss(animated: true)
+  }
 }
