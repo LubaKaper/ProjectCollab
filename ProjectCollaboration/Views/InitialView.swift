@@ -16,7 +16,16 @@ class InitialCreateView: UIView {
         pickerView.layer.cornerRadius = 13
         dateTextField.clipsToBounds = true
         dateTextField.layer.cornerRadius = 13
+        datePicker.clipsToBounds = true
+        datePicker.layer.cornerRadius = 13
     }
+    
+    public lazy var label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "cominc", size: 14)
+        label.text = "Choose a category"
+        return label
+    }()
     
     public lazy var pickerView: UIPickerView = {
         let pickerView = UIPickerView()
@@ -24,11 +33,17 @@ class InitialCreateView: UIView {
         return pickerView
     }()
     
-    public lazy var dateTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemBackground
-        textField.placeholder = "enter start date"
+    public lazy var dateTextField: UILabel = {
+        let textField = UILabel()
+        textField.text = "Choose a start date"
         return textField
+    }()
+    
+    public lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.backgroundColor = .systemBackground
+        datePicker.datePickerMode = .date
+        return datePicker
     }()
     
     public lazy var submitButton: UIButton = {
@@ -49,18 +64,29 @@ class InitialCreateView: UIView {
     }
     
     private func commonInit() {
+        confugureLabel()
         configurePickerView()
         configureDateTextField()
+        configureDatePicker()
         configureButton()
+    }
+    
+    private func confugureLabel() {
+        addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            label.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
     }
     
     private func configurePickerView() {
         addSubview(pickerView)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            pickerView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
             pickerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            pickerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3)
+            pickerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
         ])
     }
     
@@ -68,8 +94,18 @@ class InitialCreateView: UIView {
         addSubview(dateTextField)
         dateTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateTextField.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 8),
-            dateTextField.leadingAnchor.constraint(equalTo: leadingAnchor)
+            dateTextField.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 12),
+            dateTextField.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    private func configureDatePicker() {
+        addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            datePicker.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 8),
+            datePicker.centerXAnchor.constraint(equalTo: centerXAnchor),
+            datePicker.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
         ])
     }
     
@@ -77,13 +113,9 @@ class InitialCreateView: UIView {
         addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 12),
+            submitButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 12),
             submitButton.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
-    
-
-    
-    
     
 }
