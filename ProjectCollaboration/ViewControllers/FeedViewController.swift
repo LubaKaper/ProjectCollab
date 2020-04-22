@@ -23,6 +23,14 @@ class FeedViewController: UIViewController {
         }
     }
     
+    private var allUsers = [Professional]() {
+        didSet {
+            currentUser = allUsers.first
+            print(currentUser!)
+        }
+    }
+    private var currentUser: Professional?
+    
     override func loadView() {
         view = feedView
     }
@@ -42,6 +50,15 @@ class FeedViewController: UIViewController {
             } else if let snapshot = snapshot {
                 let posts = snapshot.documents.map {Post($0.data())}
                 self?.posts = posts
+            }
+        })
+        
+        listener = Firestore.firestore().collection(DatabaseServices.usersCollection).addSnapshotListener({ [weak self] (snapshot, error) in
+            if let error = error {
+                print("error getting users\(error.localizedDescription)")
+            } else if let snapshot = snapshot {
+                let currentUser = snapshot.documents.map {Professional($0.data())}
+                self?.allUsers = currentUser
             }
         })
     }
@@ -95,7 +112,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let aPost = posts[indexPath.row]
-        let detailVC = DetailViewController(aPost)
+        let detailVC = DetailViewController(aPost, currentUser)
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
@@ -103,8 +120,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
 extension FeedViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        let searchQuery = searchBar.text
-        posts = posts.filter {$0.postTitle.contains(searchQuery!)}
-        
+        guard let searchQuery = searchBar.text else {return}
+        posts = posts.filter {$0.postTitle.lowercased().contains(searchQuery.lowercased())}
     }
 }

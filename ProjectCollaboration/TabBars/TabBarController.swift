@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class TabBarController: UITabBarController {
     
@@ -17,22 +18,19 @@ class TabBarController: UITabBarController {
     }()
     
     private lazy var postVC: InitialCreatePostViewController = {
-           let vc = InitialCreatePostViewController()
+        let vc = InitialCreatePostViewController()
         vc.tabBarItem = UITabBarItem(title: "Create Post", image: UIImage(systemName: "plus"), tag: 1)
-           return vc
-       }()
+        return vc
+    }()
     
     private lazy var profileVC: ProfileViewController = {
-           let vc = ProfileViewController()
+        let vc = ProfileViewController()
         vc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 2)
-           return vc
-       }()
-
+        return vc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [UINavigationController(rootViewController: feedVC),          UINavigationController(rootViewController:postVC),     UINavigationController(rootViewController:profileVC)]
-       
     }
-    
-
 }
