@@ -31,6 +31,7 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureCV()
+        configureSearchBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +57,10 @@ class FeedViewController: UIViewController {
         feedView.feedCV.delegate = self
     }
     
+    private func configureSearchBar() {
+        feedView.searchBar.delegate = self
+    }
+    
 }
 
 extension FeedViewController: UICollectionViewDataSource {
@@ -68,7 +73,6 @@ extension FeedViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as? FeedCell else {
             fatalError()
         }
-        cell.backgroundColor = .systemGray
         let aPost = posts[indexPath.row]
         cell.updateCell(post: aPost)
         return cell
@@ -93,5 +97,14 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
         let aPost = posts[indexPath.row]
         let detailVC = DetailViewController(aPost)
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+extension FeedViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        let searchQuery = searchBar.text
+        posts = posts.filter {$0.postTitle.contains(searchQuery!)}
+        
     }
 }
