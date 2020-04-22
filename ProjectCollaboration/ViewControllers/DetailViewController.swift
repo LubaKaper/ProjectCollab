@@ -19,10 +19,12 @@ class DetailViewController: UIViewController {
     }
     
     private var selectedPost: Post
+    private var professional: Professional
     
-    init( _ selectedPost: Post){
+    init( _ selectedPost: Post, _ professional: Professional){
        
         self.selectedPost = selectedPost
+        self.professional = professional
         super.init(nibName: nil, bundle: nil)
 
     }
@@ -56,7 +58,20 @@ class DetailViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         //TODO: Add closure with logic for firebase
-        let collaboraterAction = UIAlertAction(title: "Collaborate on this project", style: .default)
+        let collaboraterAction = UIAlertAction(title: "Collaborate on this project", style: .default) { (alertaction) in
+            DatabaseServices.shared.addCollab(userName: self.professional.name) {[weak self] (result) in
+                switch result {
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Error collaborating", message: error.localizedDescription)
+                    }
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Success!" , message: "Now you ready to collaborate!")
+                    }
+                }
+            }
+        }
         alertController.addAction(collaboraterAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
