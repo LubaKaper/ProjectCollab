@@ -9,8 +9,8 @@
 import UIKit
 
 class DetailView: UIView {
-
-       override func layoutSubviews() {
+    
+    override func layoutSubviews() {
         super.layoutSubviews()
         postImageView.clipsToBounds =  true
         postImageView.layer.cornerRadius = 13
@@ -35,21 +35,21 @@ class DetailView: UIView {
         let label = UILabel()
         label.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
         label.text = "Category \nProject name \nLocation \nStart Date \n "
-        label.textColor = .systemOrange
+        label.textColor = .systemBlue
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = UIFont(name: "ChalkboardSE-Regular", size: 21.0)
+        label.font = UIFont(name: "ChalkboardSE-Regular", size: 18.0)
         return label
     }()
     
     public lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.text = " Here we will have the full description of the project that is being offere a collaboration on, with all the details "
-       // textView.font = UIFont(name: "Didot", size: 20.0)
+        // textView.font = UIFont(name: "Didot", size: 20.0)
         textView.isSelectable = false
         textView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         textView.font = UIFont(name: "GillSans", size: 21.0)
-      return textView
+        return textView
     }()
     
     public lazy var postedByLabel: UILabel = {
@@ -57,29 +57,28 @@ class DetailView: UIView {
         label.text = "postedBy@ "
         label.numberOfLines = 0
         label.textAlignment = .left
-        //label.font = UIFont(name: "Didot", size: 23.0)
+        label.font = UIFont(name: "GillSans", size: 20.0)
+        label.textColor = .systemBlue
         return label
     }()
     
     private lazy var collaborateButton: UIButton = {
-            let button = UIButton()
-        
+        let button = UIButton()
         button.setTitle("Collaborate", for: .normal)
-        
-        //button.setImage(UIImage(named: "collaborate"), for: .normal)
-            button.tag = 0
+        button.tag = 0
         button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
-            return button
-        }()
+        return button
+    }()
     
     private lazy var donateButton: UIButton = {
         let button = UIButton()
         button.setTitle("Donate", for: .normal)
-        //button.setImage(UIImage(named: "donate"), for: .normal)
+        
         button.tag = 1
         button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
         return button
     }()
+    
     public lazy var allButtons: [UIButton] = {
         let buttons = [collaborateButton, donateButton]
         return buttons
@@ -95,24 +94,25 @@ class DetailView: UIView {
     }()
     
     override init(frame: CGRect) {
-      super.init(frame: UIScreen.main.bounds)
-      commonInit()
+        super.init(frame: UIScreen.main.bounds)
+        commonInit()
     }
     
     
     
     required init?(coder: NSCoder) {
-      super.init(coder: coder)
-      commonInit()
+        super.init(coder: coder)
+        commonInit()
     }
     
     private func commonInit() {
         setupImageViewConstraints()
         setupProjectInfoLabelConstraints()
+        setupBostedbyLabelConstraints()
         setupDescriptionTextViewConstraint()
         setupStackViewConstraints()
     }
-
+    
     private func setupImageViewConstraints() {
         addSubview(postImageView)
         postImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -133,11 +133,21 @@ class DetailView: UIView {
         ])
     }
     
+    private func setupBostedbyLabelConstraints() {
+        addSubview(postedByLabel)
+        postedByLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            postedByLabel.topAnchor.constraint(equalTo: projectNameLabel.bottomAnchor, constant: 5),
+            postedByLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            postedByLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+        ])
+    }
+    
     private func setupDescriptionTextViewConstraint() {
         addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            descriptionTextView.topAnchor.constraint(equalTo: projectNameLabel.bottomAnchor, constant: 20),
+            descriptionTextView.topAnchor.constraint(equalTo: postedByLabel.bottomAnchor, constant: 10),
             descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             descriptionTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15)

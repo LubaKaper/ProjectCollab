@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SafariServices
 
 class DetailViewController: UIViewController {
 
@@ -34,12 +35,13 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
         updateUI()
+        buttonsPressed()
     }
 
     private func updateUI() {
-        detailView.projectNameLabel.text = "Category: \(selectedPost.category) \nProject name: \(selectedPost.postTitle) \nLocation: \nStart Date: \(selectedPost.startDate) \n "
+        detailView.projectNameLabel.text = " Category: \(selectedPost.category) \n Project name: \(selectedPost.postTitle) \n Location: \n Start Date: \(selectedPost.startDate) \n Funds Needed: Not at this stage of the project "
         detailView.descriptionTextView.text = selectedPost.description
-        
+        detailView.postedByLabel.text = "posted by @\(selectedPost.postedBy)"
         StorageService.shared.fetchPhoto(filename: "posts/\(selectedPost.imageURL)") { [weak self](result) in
             switch result {
             case .failure(let appError):
@@ -51,6 +53,35 @@ class DetailViewController: UIViewController {
             }
         }
     }
-
+    private func buttonsPressed() {
+        detailView.allButtons[0].addTarget(self, action: #selector(collaborateButtonPressed(_:)), for: .touchUpInside)
+        
+        detailView.allButtons[1].addTarget(self, action: #selector(donateButtonPressed(_:)), for: .touchUpInside)
+    }
+    
+    @objc func collaborateButtonPressed(_ sender: UIButton) {
+        print("collab button pressed")
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        //TODO: Add closure with logic for firebase
+        let collaboraterAction = UIAlertAction(title: "Collaborate on this project", style: .default)
+        alertController.addAction(collaboraterAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
+    @objc func donateButtonPressed(_ sender: UIButton) {
+        print("donate button pressed")
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let paypalAction = UIAlertAction(title: "Donate with PayPal", style: .default) { [weak self](aletAction) in
+            let url = "https://www.paypal.com/us/signin"
+            let vc = SFSafariViewController(url: URL(string: url)!)
+            self?.present(vc, animated: true)
+        }
+        alertController.addAction(paypalAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
 
 }
