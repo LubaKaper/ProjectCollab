@@ -42,16 +42,8 @@ class DetailViewController: UIViewController {
         detailView.projectNameLabel.text = " Category: \(selectedPost.category) \n Project name: \(selectedPost.postTitle) \n Location: \n Start Date: \(selectedPost.startDate) \n Funds Needed: Not at this stage of the project "
         detailView.descriptionTextView.text = selectedPost.description
         detailView.postedByLabel.text = "posted by @\(selectedPost.postedBy)"
-        StorageService.shared.fetchPhoto(filename: "posts/\(selectedPost.imageURL)") { [weak self](result) in
-            switch result {
-            case .failure(let appError):
-                print("error: \(appError)")
-            case .success(let url):
-                DispatchQueue.main.async {
-                    self?.detailView.postImageView.kf.setImage(with: url)
-                }
-            }
-        }
+        detailView.postImageView.kf.setImage(with: URL(string: selectedPost.imageURL))
+
     }
     private func buttonsPressed() {
         detailView.allButtons[0].addTarget(self, action: #selector(collaborateButtonPressed(_:)), for: .touchUpInside)
