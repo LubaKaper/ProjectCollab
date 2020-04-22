@@ -22,7 +22,8 @@ class FeedCell: UICollectionViewCell {
     public lazy var postTitle: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.font = UIFont.systemFont(ofSize: 30.0)
+        label.textColor = UIColor.blue
         label.text = "Article"
         return label
     }()
@@ -32,8 +33,17 @@ class FeedCell: UICollectionViewCell {
         label.numberOfLines = 3
         label.font = UIFont.preferredFont(forTextStyle: .subheadline)
         label.text = "Abstract"
+        label.textColor = UIColor.blue
         return label
     }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.borderWidth = 3
+        self.layer.borderColor = UIColor.green.cgColor
+        self.layer.cornerRadius = 13
+        postImage.layer.cornerRadius = 13
+    }
     
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -88,3 +98,5 @@ class FeedCell: UICollectionViewCell {
         postImage.kf.setImage(with: URL(string: post.imageURL))
     }
 }
+
+

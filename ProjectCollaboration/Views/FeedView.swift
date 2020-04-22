@@ -14,7 +14,7 @@ class FeedView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .systemRed
+        cv.backgroundColor = .systemBackground
         return cv
     }()
     
@@ -23,7 +23,7 @@ class FeedView: UIView {
         searchBar.backgroundColor = .systemBlue
        return searchBar
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
