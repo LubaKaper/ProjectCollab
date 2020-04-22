@@ -14,6 +14,7 @@ class DatabaseServices {
     static let postCollection = "posts"
     static let usersCollection = "professionals"
     
+    
     private let db = Firestore.firestore()
     
     private init()  {}
@@ -50,6 +51,18 @@ class DatabaseServices {
             } else if let snapshot = snapshot {
                 let users = snapshot.documents.map {Professional( $0.data())}
                 completionHandler(.success(users))
+            }
+        }
+    }
+    
+    
+    public func addCollab(userName: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+        let document = db.collection(DatabaseServices.postCollection).document()
+        db.collection(DatabaseServices.postCollection).document(document.documentID).updateData(["collaborators" : userName]) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
             }
         }
     }
