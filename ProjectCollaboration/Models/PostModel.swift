@@ -16,6 +16,7 @@ struct Post {
     let postTitle: String
     let startDate: String
     let imageURL: String
+    let collaborators: String
 }
 extension Post {
     init(_ dictionary: [String: Any]) {
@@ -26,5 +27,6 @@ extension Post {
         self.postTitle = dictionary["postTitle"] as? String ?? "no title"
         self.startDate = dictionary["startDate"] as? String ?? "no date"
         self.imageURL = dictionary["imageURL"] as? String ?? "no image url"
+        self.collaborators = dictionary["collaborators"] as? String ?? "no collaborators"
     }
 }
