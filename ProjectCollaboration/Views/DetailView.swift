@@ -33,11 +33,12 @@ class DetailView: UIView {
     
     public lazy var projectNameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemBlue
+        label.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
         label.text = "Category \nProject name \nLocation \nStart Date \n "
+        label.textColor = .systemOrange
         label.numberOfLines = 0
         label.textAlignment = .left
-        //label.font = UIFont(name: "Didot", size: 23.0)
+        label.font = UIFont(name: "ChalkboardSE-Regular", size: 21.0)
         return label
     }()
     
@@ -46,7 +47,8 @@ class DetailView: UIView {
         textView.text = " Here we will have the full description of the project that is being offere a collaboration on, with all the details "
        // textView.font = UIFont(name: "Didot", size: 20.0)
         textView.isSelectable = false
-        textView.backgroundColor = .white
+        textView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        textView.font = UIFont(name: "GillSans", size: 21.0)
       return textView
     }()
     
@@ -61,8 +63,10 @@ class DetailView: UIView {
     
     private lazy var collaborateButton: UIButton = {
             let button = UIButton()
-        button.titleLabel?.text = "Collaborate"
-            //button.setImage(UIImage(named: "collaborate"), for: .normal)
+        
+        button.setTitle("Collaborate", for: .normal)
+        
+        //button.setImage(UIImage(named: "collaborate"), for: .normal)
             button.tag = 0
         button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
             return button
@@ -70,7 +74,7 @@ class DetailView: UIView {
     
     private lazy var donateButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.text = "Donate"
+        button.setTitle("Donate", for: .normal)
         //button.setImage(UIImage(named: "donate"), for: .normal)
         button.tag = 1
         button.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
@@ -136,7 +140,7 @@ class DetailView: UIView {
             descriptionTextView.topAnchor.constraint(equalTo: projectNameLabel.bottomAnchor, constant: 20),
             descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            descriptionTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.20)
+            descriptionTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15)
         ])
     }
     
