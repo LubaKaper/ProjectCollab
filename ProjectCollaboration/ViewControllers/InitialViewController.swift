@@ -16,7 +16,7 @@ class InitialCreatePostViewController: UIViewController {
         view = initialView
     }
     
-    let categories = ["Art", "Film", "iOS Development", "Gardening", "Health", "Other"]
+    var categories = ["Art", "Film", "iOS Development", "Gardening", "Health", "Other"]
     
     var selectedCategory: String!
 
@@ -26,6 +26,7 @@ class InitialCreatePostViewController: UIViewController {
         configureButton()
         initialView.pickerView.dataSource = self
         initialView.pickerView.delegate = self
+        selectedCategory = categories.first
     }
     
     private func configureButton() {
@@ -35,6 +36,7 @@ class InitialCreatePostViewController: UIViewController {
     @objc private func sumbitButtonPressed() {
         let postViewController = CreatePostViewController()
         postViewController.category = selectedCategory
+        postViewController.date = initialView.datePicker.date
         navigationController?.show(postViewController, sender: self)
     }
 
