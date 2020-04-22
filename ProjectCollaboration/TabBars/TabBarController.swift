@@ -16,8 +16,8 @@ class TabBarController: UITabBarController {
         return vc
     }()
     
-    private lazy var postVC: CreatePostViewController = {
-           let vc = CreatePostViewController()
+    private lazy var postVC: InitialCreatePostViewController = {
+           let vc = InitialCreatePostViewController()
         vc.tabBarItem = UITabBarItem(title: "Create Post", image: UIImage(systemName: "plus"), tag: 1)
            return vc
        }()

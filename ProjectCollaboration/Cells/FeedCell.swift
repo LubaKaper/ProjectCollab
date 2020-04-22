@@ -85,16 +85,6 @@ class FeedCell: UICollectionViewCell {
     public func updateCell(post: Post) {
         postedBy.text = post.postedBy
         postTitle.text = post.postTitle
-        
-        StorageService.shared.fetchPhoto(filename: "posts/\(post.imageURL)") { [weak self] (result) in
-            switch result {
-            case .failure(let picError):
-                print("Failed to get pic:\(picError)")
-            case .success(let url):
-                DispatchQueue.main.async {
-                    self?.postImage.kf.setImage(with: url)
-                }
-            }
-        }
+        postImage.kf.setImage(with: URL(string: post.imageURL))
     }
 }
