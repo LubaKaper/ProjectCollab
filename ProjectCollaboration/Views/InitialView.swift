@@ -56,6 +56,7 @@ class InitialCreateView: UIView {
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
+        
     }
     
     required init?(coder: NSCoder) {

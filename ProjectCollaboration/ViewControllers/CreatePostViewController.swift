@@ -13,7 +13,7 @@ import FirebaseFirestore
 class CreatePostViewController: UIViewController {
     
     private var createView = CreatePostView()
-    
+
     public var category = ""
     
     public var date = Date()
@@ -40,13 +40,17 @@ class CreatePostViewController: UIViewController {
         return gesture
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
         configureNavigationBar()
         addGestures()
-        createView.categoryTextField.text = category
+        print(date.string(with: "MMM dd, yyyy"))
     }
+    
+  
     
     private func addGestures() {
         createView.imageView.isUserInteractionEnabled = true
@@ -84,14 +88,9 @@ class CreatePostViewController: UIViewController {
     }
     
     
-    
-    
-    
     @objc private func addButtonPressed() {
         guard let titleLabel = createView.titleTextField.text,
             !titleLabel.isEmpty,
-            let date = createView.dateTextField.text,
-            !date.isEmpty,
             let location = createView.locationTextField.text,
             !location.isEmpty,
             let description = createView.descriptionTextView.text,
@@ -105,7 +104,7 @@ class CreatePostViewController: UIViewController {
         
         let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: createView.imageView.bounds)
         
-        DatabaseServices.shared.createPost(title: titleLabel, date: date, category: category, location: location, description: description, profId: "1", postedBy: "Oscar") { (result) in
+        DatabaseServices.shared.createPost(title: titleLabel, date: date.string(with: "MMM dd, yyyy"), category: category, location: location, description: description, profId: "1", postedBy: "Oscar") { (result) in
             switch result {
             case .failure(let appError):
                 DispatchQueue.main.async {
@@ -146,14 +145,12 @@ class CreatePostViewController: UIViewController {
     }
     
     private func hideKeyboard() {
-        createView.dateTextField.resignFirstResponder()
+        
     }
     
     @objc func keyboardWillChnage(notification: Notification) {
         
     }
-    
-    
     
 }
 
@@ -179,16 +176,9 @@ extension UIImage {
 }
 
 extension Date {
-
-    func toString(withFormat format: String = "EEEE ، d MMMM yyyy") -> String {
-
+    func string(with format: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "fa-IR")
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tehran")
-        dateFormatter.calendar = Calendar(identifier: .persian)
         dateFormatter.dateFormat = format
-        let str = dateFormatter.string(from: self)
-
-        return str
+        return dateFormatter.string(from: self)
     }
 }

@@ -18,16 +18,6 @@ class CreatePostView: UIView {
         descriptionTextView.layer.cornerRadius = 13
     }
     
-    public lazy var captionTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemBackground
-        textField.borderStyle = .roundedRect
-        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
-        textField.placeholder = "Caption goes here"
-        return textField
-    }()
-    
-    
     public lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "photo.fill")
@@ -44,19 +34,6 @@ class CreatePostView: UIView {
         return textField
     }()
     
-    public lazy var dateTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemBackground
-        textField.borderStyle = .roundedRect
-        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
-        textField.placeholder = "5/2/20 - 5/6/20"
-        return textField
-    }()
-    
-    public lazy var categoryTextField: UILabel = {
-        let textField = UILabel()
-        return textField
-    }()
     
     public lazy var locationTextField: UITextField = {
         let textField = UITextField()
@@ -87,10 +64,7 @@ class CreatePostView: UIView {
     
     private func commonInit() {
         configureImageViewConstraints()
-        configureCaptionLabel()
         configureTitleTextField()
-        configureDateTextField()
-        configureCategoryTextField()
         configureLocationTextField()
         configureDescriptionTextView()
     }
@@ -102,57 +76,27 @@ class CreatePostView: UIView {
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4)
+            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3)
             
         ])
     }
-    
-    private func configureCaptionLabel() {
-          addSubview(captionTextField)
-          captionTextField.translatesAutoresizingMaskIntoConstraints = false
-          NSLayoutConstraint.activate([
-              captionTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
-              captionTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40),
-              captionTextField.heightAnchor.constraint(equalToConstant: 30)
-          ])
-      }
-    
     
     private func configureTitleTextField() {
         addSubview(titleTextField)
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleTextField.topAnchor.constraint(equalTo: captionTextField.bottomAnchor, constant: 8),
+            titleTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
             titleTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
             titleTextField.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
-    private func configureDateTextField() {
-        addSubview(dateTextField)
-        dateTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            dateTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
-            dateTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            dateTextField.heightAnchor.constraint(equalToConstant: 30)
-        ])
-    }
-    
-    private func configureCategoryTextField() {
-        addSubview(categoryTextField)
-        categoryTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            categoryTextField.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 8),
-            categoryTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            categoryTextField.heightAnchor.constraint(equalToConstant: 30)
-        ])
-    }
     
     private func configureLocationTextField() {
         addSubview(locationTextField)
         locationTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            locationTextField.topAnchor.constraint(equalTo: categoryTextField.bottomAnchor, constant: 8),
+            locationTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
             locationTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
             locationTextField.heightAnchor.constraint(equalToConstant: 30)
         ])
@@ -168,9 +112,6 @@ class CreatePostView: UIView {
             descriptionTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
     }
-    
-    
-    
 }
 
 
