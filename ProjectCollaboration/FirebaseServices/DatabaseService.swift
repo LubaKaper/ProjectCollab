@@ -12,6 +12,7 @@ import FirebaseFirestore
 class DatabaseServices {
     
     static let postCollection = "posts"
+    static let usersCollection = "professionals"
     
     private let db = Firestore.firestore()
     
@@ -29,7 +30,27 @@ class DatabaseServices {
         }
     }
     
-    public func createPost() {
+    public func createPost(title: String, date: String, category: String, location: String, description: String, profId: String, postedBy: String, completion: @escaping (Result<String, Error>)->()) {
+        let document = db.collection(DatabaseServices.postCollection).document()
         
+        db.collection(DatabaseServices.postCollection).document(document.documentID).setData(["category" : category, "description": description, "profId": profId, "postedBy": postedBy, "postTitle": title, "startDate": date]) { (error) in
+            if let error = error {
+                completion(.failure(error))
+                print("could not create post")
+            } else {
+                completion(.success(document.documentID))
+            }
+        }
+    }
+    
+    public func fetchAllUsers(completionHandler: @escaping (Result<[Professional], Error>) -> ()) {
+        db.collection(DatabaseServices.usersCollection).getDocuments { (snapshot, error) in
+            if let error = error {
+                completionHandler(.failure(error))
+            } else if let snapshot = snapshot {
+                let users = snapshot.documents.map {Professional( $0.data())}
+                completionHandler(.success(users))
+            }
+        }
     }
 }
