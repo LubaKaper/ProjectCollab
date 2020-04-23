@@ -31,10 +31,10 @@ class DatabaseServices {
         }
     }
     
-    public func createPost(title: String, date: String, category: String, location: String, description: String, profId: String, postedBy: String, completion: @escaping (Result<String, Error>)->()) {
+    public func createPost(title: String, date: String, category: String, location: String, description: String, profId: String, postedBy: String, collaborators: String, completion: @escaping (Result<String, Error>)->()) {
         let document = db.collection(DatabaseServices.postCollection).document()
         
-        db.collection(DatabaseServices.postCollection).document(document.documentID).setData(["category" : category, "description": description, "profId": profId, "postedBy": postedBy, "postTitle": title, "startDate": date]) { (error) in
+        db.collection(DatabaseServices.postCollection).document(document.documentID).setData(["category" : category, "description": description, "profId": profId, "postedBy": postedBy, "postTitle": title, "startDate": date, "collaborators": collaborators]) { (error) in
             if let error = error {
                 completion(.failure(error))
                 print("could not create post")
@@ -56,9 +56,9 @@ class DatabaseServices {
     }
     
     
-    public func addCollab(userName: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    public func addCollab(userName: String, user: Professional, completion: @escaping (Result<Bool, Error>) -> ()) {
         let document = db.collection(DatabaseServices.postCollection).document()
-        db.collection(DatabaseServices.postCollection).document(document.documentID).updateData(["collaborators" : userName]) { (error) in
+        db.collection(DatabaseServices.postCollection).document(user.proId).updateData(["collaborators" : userName]) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {

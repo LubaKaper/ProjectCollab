@@ -18,10 +18,12 @@ class CreatePostViewController: UIViewController {
     
     public var date = Date()
     
+    public var currentUser: Professional?
+    
     override func loadView() {
         view = createView
     }
-    
+        
     private var selectedImage: UIImage? {
         didSet {
             createView.imageView.image = selectedImage
@@ -48,6 +50,7 @@ class CreatePostViewController: UIViewController {
         configureNavigationBar()
         addGestures()
         print(date.string(with: "MMM dd, yyyy"))
+        print("create\(currentUser!.name)")
     }
     
   
@@ -104,7 +107,9 @@ class CreatePostViewController: UIViewController {
         
         let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: createView.imageView.bounds)
         
-        DatabaseServices.shared.createPost(title: titleLabel, date: date.string(with: "MMM dd, yyyy"), category: category, location: location, description: description, profId: "1", postedBy: "Oscar") { (result) in
+        guard let currentUser = currentUser else {return}
+        
+        DatabaseServices.shared.createPost(title: titleLabel, date: date.string(with: "MMM dd, yyyy"), category: category, location: location, description: description, profId: currentUser.proId , postedBy: currentUser.name, collaborators: "") { (result) in
             switch result {
             case .failure(let appError):
                 DispatchQueue.main.async {

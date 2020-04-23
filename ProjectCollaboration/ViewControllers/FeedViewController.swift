@@ -26,7 +26,7 @@ class FeedViewController: UIViewController {
     private var allUsers = [Professional]() {
         didSet {
             currentUser = allUsers.first
-            print(currentUser!)
+            print("feed\(currentUser!.name)")
         }
     }
     private var currentUser: Professional?
@@ -112,7 +112,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let aPost = posts[indexPath.row]
-        let detailVC = DetailViewController(aPost, currentUser)
+        let detailVC = DetailViewController(aPost, allUsers)
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
