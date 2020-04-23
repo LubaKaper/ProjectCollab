@@ -42,7 +42,7 @@ class DetailViewController: UIViewController {
     }
     
     private func updateUI() {
-        detailView.projectNameLabel.text = " Category: \(selectedPost.category) \n Project name: \(selectedPost.postTitle) \n Location: \n Start Date: \(selectedPost.startDate) \n Funds Needed: Not at this stage of the project "
+        detailView.projectNameLabel.text = " Category: \(selectedPost.category) \n Project name: \(selectedPost.postTitle) \n Location: \(professional.first!.location) \n Start Date: \(selectedPost.startDate) \n Funds Needed: Not at this stage of the project "
         detailView.descriptionTextView.text = selectedPost.description
         detailView.postedByLabel.text = "posted by @\(selectedPost.postedBy)"
         detailView.postImageView.kf.setImage(with: URL(string: selectedPost.imageURL))
@@ -85,7 +85,6 @@ class DetailViewController: UIViewController {
         let donateAction = UIAlertAction(title: "Donate ", style: .default) { [weak self](aletAction) in
             let donateVC = DonationViewController()
             self?.navigationController?.pushViewController(donateVC, animated: true)
-            ​​​​
         }
         alertController.addAction(donateAction)
         alertController.addAction(cancelAction)
