@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class InitialCreatePostViewController: UIViewController {
     
     private var initialView = InitialCreateView()
+    
+    private var listener: ListenerRegistration?
     
     override func loadView() {
         view = initialView
@@ -19,6 +22,32 @@ class InitialCreatePostViewController: UIViewController {
     var categories = ["Art", "Film", "iOS Development", "Gardening", "Health", "Other"]
     
     var selectedCategory: String!
+    
+    private var allUsers = [Professional]() {
+        didSet {
+            currentUser = allUsers.last
+            print("initial\(currentUser!.name)")
+        }
+    }
+    
+    private var currentUser: Professional?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        listener = Firestore.firestore().collection(DatabaseServices.usersCollection).addSnapshotListener({ [weak self] (snapshot, error) in
+            if let error = error {
+                print("error getting users\(error.localizedDescription)")
+            } else if let snapshot = snapshot {
+                let currentUser = snapshot.documents.map {Professional($0.data())}
+                self?.allUsers = currentUser
+            }
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+         super.viewWillDisappear(true)
+         listener?.remove()
+     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +64,7 @@ class InitialCreatePostViewController: UIViewController {
     
     @objc private func sumbitButtonPressed() {
         let postViewController = CreatePostViewController()
+        postViewController.currentUser = currentUser
         postViewController.category = selectedCategory
         postViewController.date = initialView.datePicker.date
         navigationController?.show(postViewController, sender: self)
