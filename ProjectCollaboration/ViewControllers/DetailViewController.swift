@@ -39,6 +39,8 @@ class DetailViewController: UIViewController {
         updateUI()
         buttonsPressed()
         print("detail\(professional.first!.name)")
+        navigationItem.title = "Together"
+        addBackgroundGradient()
     }
     
     private func updateUI() {
@@ -48,6 +50,16 @@ class DetailViewController: UIViewController {
         detailView.postImageView.kf.setImage(with: URL(string: selectedPost.imageURL))
         
     }
+    
+    private func addBackgroundGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.green.cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     private func buttonsPressed() {
         detailView.allButtons[0].addTarget(self, action: #selector(collaborateButtonPressed(_:)), for: .touchUpInside)
         

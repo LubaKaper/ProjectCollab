@@ -22,7 +22,7 @@ class InitialCreateView: UIView {
     
     public lazy var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "cominc", size: 14)
+        label.font = UIFont(name: "ChalkboardSE-Light", size: 24)
         label.text = "Choose a category"
         return label
     }()
@@ -35,12 +35,14 @@ class InitialCreateView: UIView {
     
     public lazy var dateTextField: UILabel = {
         let textField = UILabel()
+        textField.font = UIFont(name: "ChalkboardSE-Light", size: 24)
         textField.text = "Choose a start date"
         return textField
     }()
     
     public lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
+        datePicker.minimumDate = Date()
         datePicker.backgroundColor = .systemBackground
         datePicker.datePickerMode = .date
         return datePicker
@@ -48,7 +50,7 @@ class InitialCreateView: UIView {
     
     public lazy var submitButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Submit", for: .normal)
+        button.setImage(UIImage(named: "icons8-pencil"), for: .normal)
         return button
     }()
     
@@ -76,7 +78,7 @@ class InitialCreateView: UIView {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 18),
             label.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -95,7 +97,7 @@ class InitialCreateView: UIView {
         addSubview(dateTextField)
         dateTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateTextField.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 12),
+            dateTextField.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 18),
             dateTextField.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }

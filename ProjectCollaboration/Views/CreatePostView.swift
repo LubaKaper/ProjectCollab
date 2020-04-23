@@ -20,7 +20,7 @@ class CreatePostView: UIView {
     
     public lazy var imageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "photo.fill")
+        image.image = UIImage(named: "photo")
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -29,27 +29,24 @@ class CreatePostView: UIView {
         let textField = UITextField()
         textField.backgroundColor = .systemBackground
         textField.borderStyle = .roundedRect
-        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
+        textField.font = UIFont(name: "ChalkboardSE-Light", size: 22)
         textField.placeholder = "Title goes here"
         return textField
     }()
     
     
-    public lazy var locationTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemBackground
-        textField.borderStyle = .roundedRect
-        textField.font = UIFont(name: "AmericanTypewriter", size: 17)
-        textField.placeholder = "New York, New York"
-        return textField
-    }()
-    
     public lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .systemBackground
-        textView.font = UIFont(name: "AmericanTypewriter", size: 17)
-        textView.text = "This is where the description of the project will go. More information is needed in order for the user to post"
+        textView.font = UIFont(name: "ChalkboardSE-Light", size: 22)
+        textView.text = "Enter Description here"
         return textView
+    }()
+    
+    public lazy var advanceLabel: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icons8-advance"), for: .normal)
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -65,7 +62,6 @@ class CreatePostView: UIView {
     private func commonInit() {
         configureImageViewConstraints()
         configureTitleTextField()
-        configureLocationTextField()
         configureDescriptionTextView()
     }
     
@@ -92,27 +88,45 @@ class CreatePostView: UIView {
     }
     
     
-    private func configureLocationTextField() {
-        addSubview(locationTextField)
-        locationTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            locationTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
-            locationTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            locationTextField.heightAnchor.constraint(equalToConstant: 30)
-        ])
-    }
     
     private func configureDescriptionTextView() {
         addSubview(descriptionTextView)
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            descriptionTextView.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 8),
+            descriptionTextView.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
             descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            descriptionTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
+            descriptionTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
+        ])
+    }
+    
+    private func configureButton() {
+        addSubview(advanceLabel)
+        advanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            advanceLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 14),
+            advanceLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }
 
-
-
+extension UIButton {
+    func shake() {
+        let shake = CABasicAnimation(keyPath: "position")
+        shake.duration = 0.50
+        shake.repeatCount = 24
+        shake.autoreverses = true
+        
+        let fromPoint = CGPoint(x: center.x - 24, y: center.y)
+        let fromValue = NSValue(cgPoint: fromPoint)
+        
+        let toPoint = CGPoint(x: center.x + 24, y: center.y)
+        let toValue = NSValue(cgPoint: toPoint)
+        
+        
+        shake.fromValue = fromValue
+        shake.toValue = toValue
+        
+        layer.add(shake, forKey: nil)
+    }
+}

@@ -15,22 +15,39 @@ class ProfileViewController: UIViewController {
     private var keyboardIsVisible = false
     private let db = Firestore.firestore()
     
+    private var listener: ListenerRegistration?
+    
     private var posts = [Post]()    {
         didSet {
             profileView.projectsPostedCollectionView.reloadData()
+            if posts.isEmpty {
+                profileView.projectsPostedCollectionView.backgroundView = EmptyView(title: "Project", message: "No projects from the user")
+            } else {
+                profileView.projectsPostedCollectionView.backgroundView = nil
+            }
         }
     }
     
+    private var allUsers = [Professional]() {
+        didSet {
+            currentUser = allUsers.first
+            print("profile\(currentUser!.name)")
+            updateUI(user: currentUser!)
+        }
+    }
+    
+    private var currentUser: Professional?
+    
     private lazy var imagePickerController: UIImagePickerController = {
-      let ip = UIImagePickerController()
-      ip.delegate = self
-      return ip
+        let ip = UIImagePickerController()
+        ip.delegate = self
+        return ip
     }()
     
     private var selectedImage: UIImage? {
-      didSet {
-        profileView.profilePictureImageView.image = selectedImage
-      }
+        didSet {
+            profileView.profilePictureImageView.image = selectedImage
+        }
     }
     
     public lazy var tapGesture: UITapGestureRecognizer = {
@@ -38,7 +55,7 @@ class ProfileViewController: UIViewController {
         gesture.addTarget(self, action: #selector(didTap(_:)))
         return gesture
     }()
-
+    
     private let profileView = ProfileView()
     
     override func loadView() {
@@ -58,39 +75,79 @@ class ProfileViewController: UIViewController {
         // implement cell
         profileView.profilePictureImageView.addGestureRecognizer(tapGesture)
         profileView.profilePictureImageView.isUserInteractionEnabled = true
-        updateUI()
+        profileView.bioTextView.isUserInteractionEnabled = true
+        navigationItem.title = "Together"
+        addBackgroundGradient()
+      
     }
     
+    private func addBackgroundGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.green.cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         registerForKeyboardNotifications()
         profileView.profilePictureImageView.isUserInteractionEnabled = true
+        
+        listener = Firestore.firestore().collection(DatabaseServices.usersCollection).addSnapshotListener({ [weak self] (snapshot, error) in
+            if let error = error {
+                print("error getting users\(error.localizedDescription)")
+            } else if let snapshot = snapshot {
+                let currentUser = snapshot.documents.map {Professional($0.data())}
+                self?.allUsers = currentUser
+            }
+        })
+        
+        listener = Firestore.firestore().collection(DatabaseServices.postCollection).addSnapshotListener({ [weak self] (snapshot, error) in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            } else if let snapshot = snapshot {
+                let posts = snapshot.documents.map {Post($0.data())}
+                self?.posts = posts.filter {$0.profId == self?.currentUser!.proId}
+            }
+        })
     }
+       
     
-    private func updateUI()  {
+    private func updateUI(user: Professional)  {
         profileView.expertiseTextField.isUserInteractionEnabled = false
         profileView.profileNameTextField.isUserInteractionEnabled = false
         profileView.bioTextView.isUserInteractionEnabled = false
         
-        DatabaseServices.shared.fetchAllPost { (result) in
-            switch result    {
+        profileView.profileNameTextField.text = user.name
+        profileView.expertiseTextField.text = user.occupation
+        profileView.bioTextView.text = user.bio
+        
+        StorageService.shared.fetchPhoto(filename: "users/\(user.imageURL)") { [weak self] (result) in
+            switch result {
             case .failure(let error):
-                print(error)
-            case .success(let posts):
-                self.posts = posts
+                print("error getting photos: \(error)")
+            case .success(let url):
+                DispatchQueue.main.async {
+                    self?.profileView.profilePictureImageView.kf.setImage(with: url)
+                }
             }
         }
         
-        DatabaseServices.shared.fetchAllUsers { (result) in
-            switch result    {
+        StorageService.shared.fetchPhoto(filename: "users/\(user.background)") { [weak self] (result) in
+            switch result {
             case .failure(let error):
-                print(error)
-            case .success(let pros):
-                self.profileView.profileNameTextField.text = pros[1].name
-                self.profileView.expertiseTextField.text = pros[1].occupation
-                self.profileView.bioTextView.text = pros[1].bio
+                print("error getting photos: \(error)")
+            case .success(let url):
+                DispatchQueue.main.async {
+                    self?.profileView.backgroundImageView.kf.setImage(with: url)
+                }
             }
         }
+        
+        
+        
     }
     
     @objc private func didTap(_ gesture: UITapGestureRecognizer)    {
@@ -105,12 +162,12 @@ class ProfileViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { alertAction in
-          self.imagePickerController.sourceType = .camera
-          self.present(self.imagePickerController, animated: true)
+            self.imagePickerController.sourceType = .camera
+            self.present(self.imagePickerController, animated: true)
         }
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-          alertController.addAction(cameraAction)
+            alertController.addAction(cameraAction)
         }
         
         alertController.addAction(cancelAction)
@@ -160,9 +217,9 @@ class ProfileViewController: UIViewController {
     }
     
     private func resetUI()  {
-        profileView.expertiseTextField.isHidden = false
-        profileView.profileNameTextField.isHidden = false
-        profileView.profilePictureImageView.isUserInteractionEnabled = true
+        profileView.expertiseTextField.isUserInteractionEnabled = false
+        profileView.profileNameTextField.isUserInteractionEnabled = false
+        profileView.bioTextView.isUserInteractionEnabled = true
         keyboardIsVisible = false
         profileView.bioTextView.frame.origin.y += (originalYConstraint ?? 0)
         UIView.animate(withDuration: 1.0) {
@@ -220,14 +277,14 @@ extension ProfileViewController: UITextViewDelegate {
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-  
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-      return
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        selectedImage = image
+        dismiss(animated: true)
     }
-    selectedImage = image
-    dismiss(animated: true)
-  }
 }
 
 extension ProfileViewController: UICollectionViewDataSource    {
@@ -243,18 +300,17 @@ extension ProfileViewController: UICollectionViewDataSource    {
         
         let post = posts[indexPath.row]
         cell.configureCell(post: post)
-        cell.backgroundColor = .systemGreen
+        cell.backgroundColor = .systemBlue
         return cell
     }
     
 }
 
-extension ProfileViewController: UICollectionViewDelegateFlowLayout    {
+extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 135, height: 135)
+        return CGSize(width: 165, height: 165)
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     }
 }

@@ -40,6 +40,8 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureCV()
         configureSearchBar()
+        addBackgroundGradient()
+        navigationItem.title = "Together"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,6 +78,17 @@ class FeedViewController: UIViewController {
     
     private func configureSearchBar() {
         feedView.searchBar.delegate = self
+    }
+    
+    private func addBackgroundGradient() {
+        let collectionViewBackgroundView = UIView()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame.size = feedView.frame.size
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.green.cgColor]
+        feedView.feedCV.backgroundView = collectionViewBackgroundView
+        feedView.feedCV.backgroundView?.layer.addSublayer(gradientLayer)
     }
     
 }

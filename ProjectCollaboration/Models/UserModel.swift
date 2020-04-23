@@ -16,6 +16,7 @@ struct Professional {
     let occupation: String
     let proId: String
     let imageURL: String
+    let background: String
 }
 
 extension Professional {
@@ -27,5 +28,6 @@ extension Professional {
         self.occupation = dictionary["occupation"] as? String ?? "no occupation"
         self.proId = dictionary["proId"] as? String ?? "no id"
         self.imageURL = dictionary["imageURL"] as? String ?? "no imageURL"
+        self.background = dictionary["background"] as? String ?? "no background"
     }
 }
