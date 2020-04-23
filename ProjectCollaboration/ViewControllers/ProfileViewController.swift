@@ -44,7 +44,18 @@ class ProfileViewController: UIViewController {
         profileView.bioTextView.delegate = self
         profileView.profileNameTextField.delegate = self
         profileView.expertiseTextField.delegate = self
+        profileView.projectsPostedCollectionView.dataSource = self
+        profileView.projectsPostedCollectionView.delegate = self
+        // register cell here already in view?
+        // implement cell
         profileView.profilePictureImageView.addGestureRecognizer(tapGesture)
+        profileView.profilePictureImageView.isUserInteractionEnabled = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        registerForKeyboardNotifications()
+        profileView.profilePictureImageView.isUserInteractionEnabled = true
     }
     
     @objc private func didTap(_ gesture: UITapGestureRecognizer)    {
@@ -114,6 +125,9 @@ class ProfileViewController: UIViewController {
     }
     
     private func resetUI()  {
+        profileView.expertiseTextField.isHidden = false
+        profileView.profileNameTextField.isHidden = false
+        profileView.profilePictureImageView.isUserInteractionEnabled = true
         keyboardIsVisible = false
         profileView.bioTextView.frame.origin.y += (originalYConstraint ?? 0)
         UIView.animate(withDuration: 1.0) {
@@ -139,6 +153,9 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         keyboardIsVisible = false
+        profileView.expertiseTextField.isHidden = true
+        profileView.profileNameTextField.isHidden = true
+        profileView.profilePictureImageView.isUserInteractionEnabled = false
         return true
     }
     
@@ -176,4 +193,36 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     selectedImage = image
     dismiss(animated: true)
   }
+}
+
+extension ProfileViewController: UICollectionViewDataSource    {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "profileCell", for: indexPath) as? ProfileCell
+            else    {
+                fatalError()
+        }
+        cell.backgroundColor = .systemPurple
+        return cell
+    }
+    
+    
+}
+
+extension ProfileViewController: UICollectionViewDelegateFlowLayout    {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemSpacing: CGFloat = 0.1
+        let maxWidth = UIScreen.main.bounds.size.width
+        let numberOfItems: CGFloat = 1
+        let totalSpace: CGFloat = numberOfItems * itemSpacing
+        let itemWidth: CGFloat = (maxWidth - totalSpace) / 1
+        return CGSize(width: itemWidth/2, height: itemWidth/1.5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 25, bottom: 10, right: 10)
+    }
 }
