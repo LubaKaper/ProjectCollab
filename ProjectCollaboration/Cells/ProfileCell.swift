@@ -8,8 +8,15 @@
 
 import UIKit
 import FirebaseFirestore
+import Kingfisher
 
 class ProfileCell: UICollectionViewCell {
+    
+    override func layoutSubviews() {
+     super.layoutSubviews()
+     self.clipsToBounds = true
+     self.layer.cornerRadius = 13
+    }
     
     private lazy var collaboratorLabel: UILabel =   {
         let label = UILabel()
@@ -45,16 +52,7 @@ class ProfileCell: UICollectionViewCell {
     
     public func configureCell(post: Post) {
         userNameLabel.text = post.postTitle
-        projectImageView.getImage(with: post.imageURL) { (result) in
-            switch result   {
-            case .failure(let appError):
-                print(appError)
-            case .success(let data):
-                DispatchQueue.main.async {
-                    self.projectImageView.image = data
-                }
-            }
-        }
+        projectImageView.kf.setImage(with: URL(string: post.imageURL))
         collaboratorLabel.text = "Collaborator: \(post.collaborators)"
     }
     
@@ -72,7 +70,7 @@ class ProfileCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
         
             projectImageView.topAnchor.constraint(equalTo: topAnchor),
-            projectImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
+            projectImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.65),
             projectImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             projectImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
         
@@ -86,8 +84,8 @@ class ProfileCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             userNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            userNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            userNameLabel.topAnchor.constraint(equalTo: projectImageView.bottomAnchor, constant: 8)
+            userNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2),
+            userNameLabel.topAnchor.constraint(equalTo: projectImageView.bottomAnchor, constant: 2)
         
         ])
     }
@@ -99,8 +97,8 @@ class ProfileCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             collaboratorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            collaboratorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            collaboratorLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 8),
+            collaboratorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2),
+            collaboratorLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
         ])
     }
 }

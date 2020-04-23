@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		17858847548B8B96C5BAF4A2 /* Pods_ProjectCollaboration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C82A7E4D3D7F5F944B38D5 /* Pods_ProjectCollaboration.framework */; };
+		521A3C58245137070029C0BA /* DonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A3C57245137070029C0BA /* DonationViewController.swift */; };
+		521A3C5A245137190029C0BA /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A3C59245137190029C0BA /* DonationView.swift */; };
+		524E43F82451FD50005800FB /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524E43F72451FD50005800FB /* EmptyView.swift */; };
 		52EA0DAB2450BD5300FDC12C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EA0DAA2450BD5300FDC12C /* InitialViewController.swift */; };
 		52EA0DAD2450BD8100FDC12C /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EA0DAC2450BD8100FDC12C /* InitialView.swift */; };
 		52EA0DAF2450BE8C00FDC12C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52EA0DAE2450BE8C00FDC12C /* GoogleService-Info.plist */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		42C82A7E4D3D7F5F944B38D5 /* Pods_ProjectCollaboration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectCollaboration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9D345B2A00C6E10835ED18 /* Pods-ProjectCollaboration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCollaboration.debug.xcconfig"; path = "Target Support Files/Pods-ProjectCollaboration/Pods-ProjectCollaboration.debug.xcconfig"; sourceTree = "<group>"; };
+		521A3C57245137070029C0BA /* DonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonationViewController.swift; sourceTree = "<group>"; };
+		521A3C59245137190029C0BA /* DonationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
+		524E43F72451FD50005800FB /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		52EA0DAA2450BD5300FDC12C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		52EA0DAC2450BD8100FDC12C /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		52EA0DAE2450BE8C00FDC12C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 		8D62DE32244F3C46003BE4AC /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				521A3C57245137070029C0BA /* DonationViewController.swift */,
 				8D62DE33244F3CE6003BE4AC /* FeedViewController.swift */,
 				8D62DE35244F3CF6003BE4AC /* DetailViewController.swift */,
 				8D62DE37244F3D09003BE4AC /* CreatePostViewController.swift */,
@@ -120,6 +127,8 @@
 		8D62DE3B244F3D43003BE4AC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				524E43F72451FD50005800FB /* EmptyView.swift */,
+				521A3C59245137190029C0BA /* DonationView.swift */,
 				8D62DE3D244F3D9B003BE4AC /* FeedView.swift */,
 				8D62DE3F244F3DB5003BE4AC /* DetailView.swift */,
 				8D62DE41244F3DC5003BE4AC /* CreatePostView.swift */,
@@ -328,8 +337,10 @@
 				8DBAD642244E02B900889084 /* SceneDelegate.swift in Sources */,
 				8D62DE4D244F3E72003BE4AC /* DatabaseService.swift in Sources */,
 				8D62DE40244F3DB5003BE4AC /* DetailView.swift in Sources */,
+				521A3C58245137070029C0BA /* DonationViewController.swift in Sources */,
 				8D62DE47244F3E03003BE4AC /* FeedCell.swift in Sources */,
 				8D62DE31244F3C3D003BE4AC /* TabBarController.swift in Sources */,
+				521A3C5A245137190029C0BA /* DonationView.swift in Sources */,
 				52EA0DAD2450BD8100FDC12C /* InitialView.swift in Sources */,
 				8D62DE49244F3E2F003BE4AC /* ProfileCell.swift in Sources */,
 				8D62DE34244F3CE6003BE4AC /* FeedViewController.swift in Sources */,
@@ -338,6 +349,7 @@
 				52EA0DAB2450BD5300FDC12C /* InitialViewController.swift in Sources */,
 				8D62DE53244F3EA7003BE4AC /* UserModel.swift in Sources */,
 				8D62DE3A244F3D22003BE4AC /* ProfileViewController.swift in Sources */,
+				524E43F82451FD50005800FB /* EmptyView.swift in Sources */,
 				8D62DE55244F3EB4003BE4AC /* CommentModel.swift in Sources */,
 				8DBAD64A244E02B900889084 /* ProjectCollaboration.xcdatamodeld in Sources */,
 				8D62DE36244F3CF6003BE4AC /* DetailViewController.swift in Sources */,

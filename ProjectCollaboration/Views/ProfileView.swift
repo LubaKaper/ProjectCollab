@@ -9,7 +9,6 @@
 import UIKit
 
 class ProfileView: UIView {
-    
     override func layoutSubviews() {
         profilePictureImageView.clipsToBounds = true
         profilePictureImageView.layer.borderWidth = 3
@@ -19,16 +18,16 @@ class ProfileView: UIView {
         bioTextView.layer.cornerRadius = 13
     }
     
-    public lazy var projectsPostedCollectionView: UICollectionView =    {
+    public lazy var projectsPostedCollectionView: UICollectionView =  {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: "profileCell")
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = nil
         return collectionView
     }()
     
-    private let backgroundImageView: UIImageView  =  {
+    public let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo.fill")
         imageView.backgroundColor = .systemBackground
@@ -43,17 +42,21 @@ class ProfileView: UIView {
         return imageView
     }()
     
-    public let profileNameTextField: UITextField =  {
+    public let profileNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Full Name"
         textField.borderStyle = .roundedRect
+        textField.backgroundColor = .systemBlue
+        textField.textColor = .white
         return textField
     }()
     
-    public let expertiseTextField: UITextField =  {
+    public let expertiseTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Expertise"
         textField.borderStyle = .roundedRect
+        textField.backgroundColor = .systemBlue
+        textField.textColor = .white
         return textField
     }()
     
@@ -61,7 +64,8 @@ class ProfileView: UIView {
         let textView = UITextView()
         textView.text = "Bio"
         textView.font = UIFont.systemFont(ofSize: 16)
-        //textView.textColor = .lightGray
+        textView.backgroundColor = .systemBlue
+        textView.textColor = .white
         return textView
     }()
     
@@ -75,7 +79,7 @@ class ProfileView: UIView {
         commonInit()
     }
     
-    private func commonInit()   {
+    private func commonInit()  {
         setupBackgroundImageViewConstraints()
         setupProfilePictureImageView()
         setupProfileNameTextFieldConstraints()
@@ -84,38 +88,31 @@ class ProfileView: UIView {
         setupProjectPostedCollectionViewConstraints()
     }
     
-    private func setupBackgroundImageViewConstraints()  {
+    private func setupBackgroundImageViewConstraints() {
         addSubview(backgroundImageView)
-        
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            backgroundImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25)
+            backgroundImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.30)
         ])
     }
     
     private func setupProfilePictureImageView() {
         addSubview(profilePictureImageView)
-        
         profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             profilePictureImageView.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor),
             profilePictureImageView.centerYAnchor.constraint(equalTo: backgroundImageView.bottomAnchor),
             profilePictureImageView.heightAnchor.constraint(equalToConstant: 125),
             profilePictureImageView.widthAnchor.constraint(equalTo: profilePictureImageView.heightAnchor)
-
         ])
     }
     
-    private func setupProfileNameTextFieldConstraints()    {
+    private func setupProfileNameTextFieldConstraints()  {
         addSubview(profileNameTextField)
-        
         profileNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             profileNameTextField.topAnchor.constraint(equalTo: profilePictureImageView.bottomAnchor, constant: 8),
             profileNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
@@ -123,23 +120,19 @@ class ProfileView: UIView {
         ])
     }
     
-    private func setupExpertiseTextFieldConstraints()   {
+    private func setupExpertiseTextFieldConstraints()  {
         addSubview(expertiseTextField)
-        
         expertiseTextField.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-        expertiseTextField.topAnchor.constraint(equalTo: profileNameTextField.bottomAnchor, constant: 8),
-        expertiseTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-        expertiseTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
+            expertiseTextField.topAnchor.constraint(equalTo: profileNameTextField.bottomAnchor, constant: 8),
+            expertiseTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            expertiseTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }
     
-    private func setupBioTextViewConstraints()  {
+    private func setupBioTextViewConstraints() {
         addSubview(bioTextView)
-        
         bioTextView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             bioTextView.topAnchor.constraint(equalTo: expertiseTextField.bottomAnchor, constant: 11),
             bioTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -149,11 +142,9 @@ class ProfileView: UIView {
         ])
     }
     
-    private func setupProjectPostedCollectionViewConstraints()   {
+    private func setupProjectPostedCollectionViewConstraints()  {
         addSubview(projectsPostedCollectionView)
-        
         projectsPostedCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             projectsPostedCollectionView.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 11),
             projectsPostedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),

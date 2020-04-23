@@ -13,17 +13,20 @@ import FirebaseFirestore
 class CreatePostViewController: UIViewController {
     
     private var createView = CreatePostView()
-
+    
     public var category = ""
     
     public var date = Date()
     
     public var currentUser: Professional?
     
+    private var originalYConstraint: CGFloat?
+    private var keyboardIsVisible = false
+    
     override func loadView() {
         view = createView
     }
-        
+    
     private var selectedImage: UIImage? {
         didSet {
             createView.imageView.image = selectedImage
@@ -46,14 +49,18 @@ class CreatePostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = .systemTeal
         configureNavigationBar()
+        configureTextViews()
         addGestures()
-        print(date.string(with: "MMM dd, yyyy"))
-        print("create\(currentUser!.name)")
     }
     
-  
+    private func configureTextViews() {
+        createView.titleTextField.delegate = self
+        createView.descriptionTextView.delegate = self
+        createView.descriptionTextView.textColor = UIColor.lightGray
+    }
+    
     
     private func addGestures() {
         createView.imageView.isUserInteractionEnabled = true
@@ -67,6 +74,7 @@ class CreatePostViewController: UIViewController {
     }
     
     private func configureNavigationBar() {
+        navigationItem.title = category
         let addButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addButtonPressed))
         self.navigationItem.rightBarButtonItem = addButton
     }
@@ -90,26 +98,35 @@ class CreatePostViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    
-    @objc private func addButtonPressed() {
+    private func configureBar() {
         guard let titleLabel = createView.titleTextField.text,
             !titleLabel.isEmpty,
-            let location = createView.locationTextField.text,
-            !location.isEmpty,
+            let description = createView.descriptionTextView.text,
+            !description.isEmpty,
+            let image = createView.imageView.image,
+            image == selectedImage
+            else {
+                navigationItem.rightBarButtonItem?.isEnabled = false
+                return
+        }
+        navigationItem.rightBarButtonItem?.isEnabled = true
+    }
+    
+    
+    @objc private func addButtonPressed() {
+        
+        guard let titleLabel = createView.titleTextField.text,
+            !titleLabel.isEmpty,
             let description = createView.descriptionTextView.text,
             !description.isEmpty,
             let selectedImage = selectedImage
             else {
-                print("missing fields")
+                self.showAlert(title: "Missing Fields", message: nil)
                 return
         }
-        
-        
         let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: createView.imageView.bounds)
-        
         guard let currentUser = currentUser else {return}
-        
-        DatabaseServices.shared.createPost(title: titleLabel, date: date.string(with: "MMM dd, yyyy"), category: category, location: location, description: description, profId: currentUser.proId , postedBy: currentUser.name, collaborators: "") { (result) in
+        DatabaseServices.shared.createPost(title: titleLabel, date: date.string(with: "MMM dd, yyyy"), category: category, location: "", description: description, profId: currentUser.proId , postedBy: currentUser.name, collaborators: "", user: currentUser) { (result) in
             switch result {
             case .failure(let appError):
                 DispatchQueue.main.async {
@@ -144,19 +161,17 @@ class CreatePostViewController: UIViewController {
                 print("succesfully updated image")
                 DispatchQueue.main.async {
                     self.showAlert()
+                    self.resetUI()
                 }
             }
         }
     }
     
-    private func hideKeyboard() {
-        
+    private func resetUI() {
+        createView.imageView.image = UIImage(named: "photo")
+        createView.titleTextField.text = ""
+        createView.descriptionTextView.text = ""
     }
-    
-    @objc func keyboardWillChnage(notification: Notification) {
-        
-    }
-    
 }
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -166,6 +181,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         selectedImage = image
         dismiss(animated: true, completion: nil)
+        navigationController?.navigationBar.isHidden = false
     }
 }
 
@@ -187,3 +203,34 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+extension CreatePostViewController: UITextFieldDelegate    {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        configureBar()
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true
+    }
+}
+
+extension CreatePostViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = ""
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            configureBar()
+            return false
+        }
+        return true
+    }
+}
+
+

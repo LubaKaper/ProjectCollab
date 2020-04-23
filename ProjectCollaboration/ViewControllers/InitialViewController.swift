@@ -19,7 +19,7 @@ class InitialCreatePostViewController: UIViewController {
         view = initialView
     }
     
-    var categories = ["Art", "Film", "iOS Development", "Gardening", "Health", "Other"]
+    var categories = ["Art", "Film", "iOS Development", "Gardening","Health", "Finance", "Writting", "Music", "Lifestyle", "Other"]
     
     var selectedCategory: String!
     
@@ -48,14 +48,25 @@ class InitialCreatePostViewController: UIViewController {
          super.viewWillDisappear(true)
          listener?.remove()
      }
-
+    
+    private func addBackgroundGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.green.cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
+        navigationItem.title = "Together"
         configureButton()
         initialView.pickerView.dataSource = self
         initialView.pickerView.delegate = self
         selectedCategory = categories.first
+        addBackgroundGradient()
     }
     
     private func configureButton() {

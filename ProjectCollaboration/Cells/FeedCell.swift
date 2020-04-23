@@ -40,7 +40,7 @@ class FeedCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.borderWidth = 3
-        self.layer.borderColor = UIColor.green.cgColor
+        self.layer.borderColor = UIColor.systemGreen.cgColor
         self.layer.cornerRadius = 13
         postImage.layer.cornerRadius = 13
     }
