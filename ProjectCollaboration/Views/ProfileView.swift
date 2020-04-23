@@ -19,6 +19,15 @@ class ProfileView: UIView {
         bioTextView.layer.cornerRadius = 13
     }
     
+    public lazy var projectsPostedCollectionView: UICollectionView =    {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: "profileCell")
+        collectionView.backgroundColor = .systemOrange
+        return collectionView
+    }()
+    
     private let backgroundImageView: UIImageView  =  {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo.fill")
@@ -31,7 +40,6 @@ class ProfileView: UIView {
         imageView.image = UIImage(imageLiteralResourceName: "thanksgiving")
         imageView.contentMode = .scaleAspectFill
         imageView.layoutSubviews()
-        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -73,6 +81,7 @@ class ProfileView: UIView {
         setupProfileNameTextFieldConstraints()
         setupExpertiseTextFieldConstraints()
         setupBioTextViewConstraints()
+        setupProjectPostedCollectionViewConstraints()
     }
     
     private func setupBackgroundImageViewConstraints()  {
@@ -132,12 +141,24 @@ class ProfileView: UIView {
         bioTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            bioTextView.topAnchor.constraint(equalTo: expertiseTextField.bottomAnchor, constant: 8),
+            bioTextView.topAnchor.constraint(equalTo: expertiseTextField.bottomAnchor, constant: 11),
             bioTextView.centerXAnchor.constraint(equalTo: centerXAnchor),
             bioTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             bioTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            bioTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -11)
+            bioTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1)
+        ])
+    }
+    
+    private func setupProjectPostedCollectionViewConstraints()   {
+        addSubview(projectsPostedCollectionView)
         
+        projectsPostedCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            projectsPostedCollectionView.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 11),
+            projectsPostedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            projectsPostedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            projectsPostedCollectionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
         ])
     }
 }
