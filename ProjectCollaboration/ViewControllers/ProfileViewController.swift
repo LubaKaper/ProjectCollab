@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class ProfileViewController: UIViewController {
     
     private var originalYConstraint: CGFloat?
     private var keyboardIsVisible = false
+    private let db = Firestore.firestore()
+    
+    private var posts = [Post]()    {
+        didSet {
+            profileView.projectsPostedCollectionView.reloadData()
+        }
+    }
     
     private lazy var imagePickerController: UIImagePickerController = {
       let ip = UIImagePickerController()
@@ -39,7 +47,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = .systemGreen
         registerForKeyboardNotifications()
         profileView.bioTextView.delegate = self
         profileView.profileNameTextField.delegate = self
@@ -50,12 +58,39 @@ class ProfileViewController: UIViewController {
         // implement cell
         profileView.profilePictureImageView.addGestureRecognizer(tapGesture)
         profileView.profilePictureImageView.isUserInteractionEnabled = true
+        updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         registerForKeyboardNotifications()
         profileView.profilePictureImageView.isUserInteractionEnabled = true
+    }
+    
+    private func updateUI()  {
+        profileView.expertiseTextField.isUserInteractionEnabled = false
+        profileView.profileNameTextField.isUserInteractionEnabled = false
+        profileView.bioTextView.isUserInteractionEnabled = false
+        
+        DatabaseServices.shared.fetchAllPost { (result) in
+            switch result    {
+            case .failure(let error):
+                print(error)
+            case .success(let posts):
+                self.posts = posts
+            }
+        }
+        
+        DatabaseServices.shared.fetchAllUsers { (result) in
+            switch result    {
+            case .failure(let error):
+                print(error)
+            case .success(let pros):
+                self.profileView.profileNameTextField.text = pros[1].name
+                self.profileView.expertiseTextField.text = pros[1].occupation
+                self.profileView.bioTextView.text = pros[1].bio
+            }
+        }
     }
     
     @objc private func didTap(_ gesture: UITapGestureRecognizer)    {
@@ -197,7 +232,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 extension ProfileViewController: UICollectionViewDataSource    {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -205,24 +240,21 @@ extension ProfileViewController: UICollectionViewDataSource    {
             else    {
                 fatalError()
         }
-        cell.backgroundColor = .systemPurple
+        
+        let post = posts[indexPath.row]
+        cell.configureCell(post: post)
+        cell.backgroundColor = .systemGreen
         return cell
     }
-    
     
 }
 
 extension ProfileViewController: UICollectionViewDelegateFlowLayout    {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSpacing: CGFloat = 0.1
-        let maxWidth = UIScreen.main.bounds.size.width
-        let numberOfItems: CGFloat = 1
-        let totalSpace: CGFloat = numberOfItems * itemSpacing
-        let itemWidth: CGFloat = (maxWidth - totalSpace) / 1
-        return CGSize(width: itemWidth/2, height: itemWidth/1.5)
+        return CGSize(width: 135, height: 135)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 25, bottom: 10, right: 10)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
