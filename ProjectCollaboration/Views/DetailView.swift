@@ -35,7 +35,7 @@ class DetailView: UIView {
         let label = UILabel()
         label.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
         label.text = "Category \nProject name \nLocation \nStart Date \n "
-        label.textColor = .systemBlue
+        label.textColor = #colorLiteral(red: 0.004859850742, green: 0.09608627111, blue: 0.5749928951, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .left
         label.font = UIFont(name: "ChalkboardSE-Regular", size: 18.0)
@@ -49,6 +49,7 @@ class DetailView: UIView {
         textView.isSelectable = false
         textView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         textView.font = UIFont(name: "GillSans", size: 21.0)
+        textView.textColor = .white
         return textView
     }()
     
@@ -58,7 +59,8 @@ class DetailView: UIView {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.font = UIFont(name: "GillSans", size: 20.0)
-        label.textColor = .systemBlue
+        label.textColor = #colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 0.6180436644)
+
         return label
     }()
     

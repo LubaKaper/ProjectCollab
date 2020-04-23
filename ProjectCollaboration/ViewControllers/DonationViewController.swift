@@ -19,7 +19,7 @@ class DonationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.2375229895, green: 0.907618463, blue: 0.6326394081, alpha: 0.7408764983)
-
+        navigationItem.title = "Together"
        
     }
     
