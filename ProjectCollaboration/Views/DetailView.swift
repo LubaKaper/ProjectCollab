@@ -86,8 +86,8 @@ class DetailView: UIView {
     
     private var stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
+        stackView.distribution = .fillEqually
+        stackView.spacing = 40
         stackView.axis = .horizontal
         stackView.backgroundColor = .yellow
         return stackView
@@ -160,10 +160,10 @@ class DetailView: UIView {
         stackView.addArrangedSubview(donateButton)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
-            stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05)
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.04)
         ])
     }
 }
