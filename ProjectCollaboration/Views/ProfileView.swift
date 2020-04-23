@@ -24,14 +24,14 @@ class ProfileView: UIView {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: "profileCell")
-        collectionView.backgroundColor = .systemOrange
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
     
     private let backgroundImageView: UIImageView  =  {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo.fill")
-        imageView.backgroundColor = .green
+        imageView.backgroundColor = .systemBackground
         return imageView
     }()
     
@@ -61,7 +61,7 @@ class ProfileView: UIView {
         let textView = UITextView()
         textView.text = "Bio"
         textView.font = UIFont.systemFont(ofSize: 16)
-        textView.textColor = .lightGray
+        //textView.textColor = .lightGray
         return textView
     }()
     
@@ -158,7 +158,7 @@ class ProfileView: UIView {
             projectsPostedCollectionView.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 11),
             projectsPostedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             projectsPostedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            projectsPostedCollectionView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
+            projectsPostedCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
     }
 }
